@@ -2,14 +2,14 @@ import Button from "@/components/Button";
 import Column from "@/components/Column";
 import ModalConfirm from "@/components/ModalConfirm";
 import ModalTask from "@/components/ModalTask";
-import { COLUMNS, INITIAL_TASKS } from "@/constants/Task.constants";
+import { COLUMNS } from "@/constants/Task.constants";
 import { ITask } from "@/types/Task";
 import { DragDropProvider, DragEndEvent } from '@dnd-kit/react';
 import { describe } from "node:test";
 import { useEffect, useState, SubmitEvent } from "react";
 
 const App = () => {
-  const [tasks, setTasks] = useState(INITIAL_TASKS);
+  const [tasks, setTasks] = useState<ITask[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState<{
     activity: string;
@@ -72,7 +72,7 @@ const App = () => {
     const { source, target } = event.operation;
     if(!target) return;
 
-    const taskId = source.id as string;
+    const taskId = source?.id as string;
     const newStatus = target.id as ITask['status'];
 
     setTasks((prevTasks) => 
